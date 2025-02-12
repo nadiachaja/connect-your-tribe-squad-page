@@ -58,7 +58,7 @@ app.get('/', async function (request, response) {
   // Je zou dat hier kunnen filteren, sorteren, of zelfs aanpassen, voordat je het doorgeeft aan de view
   
   personResponseJSON.data.map(function(person){
-    person.fav_country = countries[person.fav_country]
+    person.fav_country_for_map = countries[person.fav_country] 
   })
 
   // Render index.liquid uit de views map en geef de opgehaalde data mee als variabele, genaamd persons
@@ -72,6 +72,33 @@ app.post('/', async function (request, response) {
   // Er is nog geen afhandeling van POST, redirect naar GET op /
   response.redirect(303, '/')
 })
+
+app.get('/country/:countryCode', async function (request, response) {
+  // Haal alle personen uit de WHOIS API op, van dit jaar
+  // make countrycode capitals again
+  const code = request.params.countryCode.toUpperCase()
+  // const personResponse = await fetch('https://fdnd.directus.app/items/person/?fields=name,fav_country&filter[fav_country][_eq]=esp'+code)
+  const personResponse = await fetch('https://fdnd.directus.app/items/person/?fields=name,fav_country&filter[fav_country][_eq]='+code)
+
+  
+  console.log('https://fdnd.directus.app/items/person/?fields=name,fav_country&filter[fav_country][_eq]='+code);
+  
+
+  // En haal daarvan de JSON op
+  const personResponseJSON = await personResponse.json()
+
+  // personResponseJSON bevat gegevens van alle personen uit alle squads van dit jaar
+  
+  // Render index.liquid uit de views map en geef de opgehaalde data mee als variabele, genaamd persons
+  // Geef ook de eerder opgehaalde squad data mee aan de view
+  response.render('people.liquid', {persons: personResponseJSON.data, squads: squadResponseJSON.data})
+})
+
+
+
+
+
+
 
 
 // Maak een GET route voor een detailpagina met een route parameter, id

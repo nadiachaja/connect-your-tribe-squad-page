@@ -29,7 +29,7 @@ header{
 }
 
 ::-webkit-scrollbar-thumb:hover{
-    background: #2b82b1;
+    background: #a675f5;
 }
 
 .world-map{
@@ -54,9 +54,17 @@ path{
     fill: #66e5bf;
     stroke:#323232;
     transition:100ms;
+    opacity: .8;
+}
+g {
+    transition:100ms;
 }
 
-path:hover{
+.hover-country, .hover-country path{
+    opacity: 1;
+}
+
+.hover-country:hover, .hover-country:hover path{
     fill: #a675f5;
 }
 
