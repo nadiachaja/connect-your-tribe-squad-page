@@ -1,11 +1,23 @@
 {% render 'partials/head.liquid' %}
 
-{% comment %} <h2>Students</h2>
+<h2>Students</h2>
 <ul>
   {% for person in persons %}
-    <li><a href="/student/{{ person.id }}">{{ person.name }}</a></li>
+    <li><a href="/student/{{ person.id }}">{{ person.fav_country }}</a></li>
   {% endfor %}
-</ul> {% endcomment %}
+</ul>
+
+{% comment %} <header>
+  <div>
+    <input type="radio" id="world" name="drone" value="world" checked />
+    <label for="world">World</label>
+  </div>
+
+  <div>
+    <input type="radio" id="europe" name="drone" value="europe" checked />
+    <label for="europe">Europe</label>
+  </div>
+</header> {% endcomment %}
 
 <main>
 <div class="world-map">
@@ -961,21 +973,66 @@
   </div>
 </div>  
 
-<div class="side-panel">
-  <div class="container">
-    <h1 class="person-name"></h1>
-    {% comment %} <img src="assets/teststudio230120240236.jpg" alt=""> {% endcomment %}
-    <h2></h2> 
-  </div>
-</div>
-
-<div class="zoom-conrols">
-  <button class="zoom-in">+</button>
-  <button class="zoom-out">-</button>
-  <p class="zoom-value">100%</p>
-</div>
-
 </main>
+
+{% comment %} <div id="map"></div>
+
+
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="https://datamaps.github.io/scripts/topojson.js"></script>
+<script src="https://datamaps.github.io/scripts/0.5.8/datamaps.all.hires.js"></script>
+<script>
+ var map;
+ var bubbles = [];
+ var data = {
+
+ {% for person in persons %}
+    {{ person.fav_country }}: { name: 'Test', radius: 1},
+  {% endfor %}                 
+ };
+ window.onload = function() {
+  map = new Datamap({
+   element: document.getElementById('map'),
+   projection: 'mercator',
+   fills: {
+    defaultFill: '#cccccc',
+    entered: '#E78250',
+    bubble: '#3E4581'
+   },
+   bubblesConfig: {
+    borderWidth: 1,
+    borderOpacity: .5,
+    popupTemplate: function(geography, data) {
+     return '<div class="hoverinfo"><strong>' + data.name + '</strong></div>';
+    }
+   },
+   geographyConfig: {
+    popupOnHover: false,
+    highlightOnHover: false
+   },
+   data: data
+  });
+  setTimeout(function() {
+   for (dat in data) {
+    if (document.querySelector('path.' + dat)) {
+     var c = data[dat];
+     c.players = c.radius;
+     c.centered = dat;
+     if (c.radius < 6) {
+      c.radius = 5;
+     }
+     c.fillKey = 'bubble';
+     bubbles.push(c);
+    }
+   }
+   map.bubbles(bubbles);
+  }, 500);
+  setTimeout(function() {
+   for (dat in data) {
+   }
+  }, 1000);
+ };
+</script> {% endcomment %}
 
 {% render 'partials/foot.liquid' %}
 

@@ -8,6 +8,13 @@ body{
     color: #fff;
 }
 
+header{
+    background-color: aliceblue;
+    z-index: 100;
+    bottom: 0;
+
+}
+
 ::-webkit-scrollbar{
     width: 10px;
     height: 10px;
