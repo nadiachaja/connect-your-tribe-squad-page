@@ -1,6 +1,5 @@
 {% render 'partials/head.liquid' %}
 
-<h2>Students</h2>
 {% comment %} <ul>
   {% for person in persons %}
     <li><a href="/student/{{ person.id }}">{{ person.fav_country }}</a></li>
@@ -10,15 +9,9 @@
 
 
 <header>
-  <div>
-    <input type="radio" id="world" name="drone" value="world"/>
-    <label for="world">World</label>
-  </div>
-  <div>
-    <input type="radio" id="europe" name="drone" value="europe" checked/>
-    <label for="europe">Europe</label>
-  </div>
-</header> 
+  <a href="index.liquid">World</a>
+  <a href="europe.liquid">Europe</a>
+</header>
 
 <main>
 <div class="europe-map">

@@ -1,35 +1,27 @@
-*{
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-header{
-    background-color: aliceblue;
-    z-index: 1000;
-    bottom: 0;
-    background-color: antiquewhite;
-
-}
-
-::-webkit-scrollbar{
+::-webkit-scrollbar {
     width: 10px;
     height: 10px;
 }
 
-::-webkit-scrollbar-track{
+::-webkit-scrollbar-track {
     background: #2d2733;
 }
 
-::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-thumb {
     background: #555;
 }
 
-::-webkit-scrollbar-thumb:hover{
+::-webkit-scrollbar-thumb:hover {
     background: #a675f5;
 }
 
-header{
+header {
     background-color: #a675f5;
     z-index: 1000;
     position: fixed;
@@ -43,7 +35,23 @@ header{
     border-radius: 10px;
 }
 
-.world-map{
+.europe-link{
+    color: #050542;
+
+    &:hover{
+        color: #66e5bf;
+    }
+}
+
+.world-link{
+    color: #050542;
+
+    &:hover{
+        color: #66e5bf;
+    }
+}
+
+.world-map {
     position: absolute;
     top: 0;
     left: 0;
@@ -56,27 +64,86 @@ header{
     align-items: center;
 }
 
-svg{
-    width: 100vw;
-    height: 100vh;
+.europe-map{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: max-content;
+    height: max-content;
+    min-height: 30em;
+    background-color: #050542;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-path{
+path {
     fill: #66e5bf;
-    stroke:#323232;
-    transition:100ms;
+    stroke: #323232;
+    transition: 100ms;
     opacity: .7;
 }
+
 g {
-    transition:100ms;
+    transition: 100ms;
 }
 
-.hover-country, .hover-country path{
+.hover-country,
+.hover-country path {
     opacity: 1;
 }
 
-.hover-country:hover, .hover-country:hover path{
+.hover-country:hover,
+.hover-country:hover path {
     fill: #a675f5;
 }
 
 
+
+/* svg{
+    width: 100vw;
+    height: 100vh;
+} */
+
+@media screen and (min-width:800px) {
+    svg {
+        width: 6000px;
+        height: 4500px;
+    }
+}
+
+@media screen and (min-width:900px) {
+    svg {
+        width: 9000px;
+        height: 7000px;
+    }
+}
+
+@media screen and (min-width:1000px) {
+    svg {
+        width: 100vw;
+        height: 100vh;
+    }
+}
+
+.student-country-link{
+    background-color: #050542;
+    border: 5px solid #66e5bf;
+    border-radius: 10px;
+    padding: 1em;
+    color: antiquewhite;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 1em;
+    width: 10em; 
+    justify-self: center;
+    position: relative;
+    top: 5em;
+    text-decoration: none;
+
+    &:hover{
+        background-color:#a675f5;
+    }
+}
