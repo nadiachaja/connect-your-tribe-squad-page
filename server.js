@@ -66,6 +66,96 @@ app.get('/', async function (request, response) {
   response.render('index.liquid', {persons: personResponseJSON.data, squads: squadResponseJSON.data})
 })
 
+app.get('/europe', async function (request, response) {
+
+  // Schrijf een filter (HIER IS NOG WAT WERK)
+  const euFilter = `
+  filter: {
+    "_or": [
+      {
+        "fav_country": {
+          "_eq": "ESP"
+        }
+      },
+      {
+        "fav_country": {
+          "_eq": "GBR"
+        }
+      }
+    ]
+  }`
+
+  // `filter:{
+  //   _or:[
+  //     {fav_country: {_eq:'NL'}},
+  //     {fav_country: {_eq:'BE'}},
+  //     {fav_country: {_eq:'AD'}},
+  //     {fav_country: {_eq:'AM'}},
+  //     {fav_country: {_eq:'AT'}},
+  //     {fav_country: {_eq:'BG'}},
+  //     {fav_country: {_eq:'BA'}},
+  //     {fav_country: {_eq:'BY'}},
+  //     {fav_country: {_eq:'CH'}},
+  //     {fav_country: {_eq:'CZ'}},
+  //     {fav_country: {_eq:'DE'}},
+  //     {fav_country: {_eq:'DK'}},
+  //     {fav_country: {_eq:'EE'}},
+  //     {fav_country: {_eq:'FI'}},
+  //     {fav_country: {_eq:'GB'}},
+  //     {fav_country: {_eq:'GE'}},
+  //     {fav_country: {_eq:'GR'}},
+  //     {fav_country: {_eq:'IT'}},
+  //     {fav_country: {_eq:'HR'}},
+  //     {fav_country: {_eq:'IS'}},
+  //     {fav_country: {_eq:'IE'}},
+  //     {fav_country: {_eq:'HU'}},
+  //     {fav_country: {_eq:'LT'}},
+  //     {fav_country: {_eq:'LV'}},
+  //     {fav_country: {_eq:'MD'}},
+  //     {fav_country: {_eq:'MK'}},
+  //     {fav_country: {_eq:'ME'}},
+  //     {fav_country: {_eq:'LU'}},
+  //     {fav_country: {_eq:'LI'}},
+  //     {fav_country: {_eq:'NO'}},
+  //     {fav_country: {_eq:'PL'}},
+  //     {fav_country: {_eq:'PT'}},
+  //     {fav_country: {_eq:'RS'}},
+  //     {fav_country: {_eq:'RO'}},
+  //     {fav_country: {_eq:'SK'}},
+  //     {fav_country: {_eq:'SI'}},
+  //     {fav_country: {_eq:'SE'}},
+  //     {fav_country: {_eq:'TR'}},
+  //     {fav_country: {_eq:'UA'}},
+  //     {fav_country: {_eq:'XK'}},
+  //     {fav_country: {_eq:'ES'}},
+  //     {fav_country: {_eq:'FR'}},
+  //     {fav_country: {_eq:'PT'}},
+  //     {fav_country: {_eq:'CY'}}
+  //   ]
+  // }`
+
+
+
+
+  // Haal alle personen uit de WHOIS API op, van dit jaar
+  const personResponse = await fetch('https://fdnd.directus.app/items/person/?fields=name,fav_country&' + euFilter)
+  
+  // En haal daarvan de JSON op
+  const personResponseJSON = await personResponse.json()
+  console.log(personResponseJSON)
+
+  // personResponseJSON bevat gegevens van alle personen uit alle squads van dit jaar
+  // Je zou dat hier kunnen filteren, sorteren, of zelfs aanpassen, voordat je het doorgeeft aan de view
+  
+  personResponseJSON.data.map(function(person){
+    person.fav_country_for_map = countries[person.fav_country] 
+  })
+
+  // Render index.liquid uit de views map en geef de opgehaalde data mee als variabele, genaamd persons
+  // Geef ook de eerder opgehaalde squad data mee aan de view
+  response.render('europe.liquid', {persons: personResponseJSON.data, squads: squadResponseJSON.data})
+})
+
 // Maak een POST route voor de index; hiermee kun je bijvoorbeeld formulieren afvangen
 app.post('/', async function (request, response) {
   // Je zou hier data kunnen opslaan, of veranderen, of wat je maar wilt
@@ -89,28 +179,6 @@ app.get('/country/:countryCode', async function (request, response) {
   // Geef ook de eerder opgehaalde squad data mee aan de view
   response.render('people.liquid', {persons: personResponseJSON.data, squads: squadResponseJSON.data})
 })
-
-
-
-
-
-
-
-
-// Maak een GET route voor een detailpagina met een route parameter, id
-// Zie de documentatie van Express voor meer info: https://expressjs.com/en/guide/routing.html#route-parameters
-app.get('/europe/:id', async function (request, response) {
-  // Gebruik de request parameter id en haal de juiste persoon uit de WHOIS API op
-  const personDetailResponse = await fetch('https://fdnd.directus.app/items/person/' +code)
-  // En haal daarvan de JSON op
-  const personDetailResponseJSON = await personDetailResponse.json()
-  
-  // Render student.liquid uit de views map en geef de opgehaalde data mee als variable, genaamd person
-  // Geef ook de eerder opgehaalde squad data mee aan de view
-  response.render('europe.liquid', {person: personDetailResponseJSON.data, squads: squadResponseJSON.data})
-})
-
-
 
 // Stel het poortnummer in waar express op moet gaan luisteren
 app.set('port', process.env.PORT || 8000)
