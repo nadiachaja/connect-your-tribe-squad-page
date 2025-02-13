@@ -6,8 +6,9 @@
 
 header{
     background-color: aliceblue;
-    z-index: 100;
+    z-index: 1000;
     bottom: 0;
+    background-color: antiquewhite;
 
 }
 
@@ -26,6 +27,20 @@ header{
 
 ::-webkit-scrollbar-thumb:hover{
     background: #a675f5;
+}
+
+header{
+    background-color: #a675f5;
+    z-index: 1000;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+    padding: .5em;
+    width: 15em;
+    bottom: 2em;
+    justify-self: anchor-center;
+    border-radius: 10px;
 }
 
 .world-map{
@@ -50,7 +65,7 @@ path{
     fill: #66e5bf;
     stroke:#323232;
     transition:100ms;
-    opacity: .8;
+    opacity: .7;
 }
 g {
     transition:100ms;

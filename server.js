@@ -80,10 +80,6 @@ app.get('/country/:countryCode', async function (request, response) {
   // const personResponse = await fetch('https://fdnd.directus.app/items/person/?fields=name,fav_country&filter[fav_country][_eq]=esp'+code)
   const personResponse = await fetch('https://fdnd.directus.app/items/person/?fields=name,fav_country&filter[fav_country][_eq]='+code)
 
-  
-  console.log('https://fdnd.directus.app/items/person/?fields=name,fav_country&filter[fav_country][_eq]='+code);
-  
-
   // En haal daarvan de JSON op
   const personResponseJSON = await personResponse.json()
 
@@ -105,7 +101,7 @@ app.get('/country/:countryCode', async function (request, response) {
 // Zie de documentatie van Express voor meer info: https://expressjs.com/en/guide/routing.html#route-parameters
 app.get('/europe/:id', async function (request, response) {
   // Gebruik de request parameter id en haal de juiste persoon uit de WHOIS API op
-  const personDetailResponse = await fetch('https://fdnd.directus.app/items/person/' + request.params.id)
+  const personDetailResponse = await fetch('https://fdnd.directus.app/items/person/' +code)
   // En haal daarvan de JSON op
   const personDetailResponseJSON = await personDetailResponse.json()
   
