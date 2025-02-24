@@ -45,6 +45,20 @@ app.set('views', './views')
 app.use(express.urlencoded({extended: true}))
 
 
+
+let messages = []
+
+app.get('/berichten', async function (request, response) {
+  response.render('messages.liquid', {messages: messages})
+})
+
+app.post('/berichten', async function (request, response) {
+  messages.push(request.body.tekstje)
+  response.redirect(303, '/berichten')
+})
+
+
+
 // Om Views weer te geven, heb je Routes nodig
 // Maak een GET route voor de index
 app.get('/', async function (request, response) {
@@ -85,57 +99,7 @@ app.get('/europe', async function (request, response) {
     ]
   }`
 
-  // `filter:{
-  //   _or:[
-  //     {fav_country: {_eq:'NL'}},
-  //     {fav_country: {_eq:'BE'}},
-  //     {fav_country: {_eq:'AD'}},
-  //     {fav_country: {_eq:'AM'}},
-  //     {fav_country: {_eq:'AT'}},
-  //     {fav_country: {_eq:'BG'}},
-  //     {fav_country: {_eq:'BA'}},
-  //     {fav_country: {_eq:'BY'}},
-  //     {fav_country: {_eq:'CH'}},
-  //     {fav_country: {_eq:'CZ'}},
-  //     {fav_country: {_eq:'DE'}},
-  //     {fav_country: {_eq:'DK'}},
-  //     {fav_country: {_eq:'EE'}},
-  //     {fav_country: {_eq:'FI'}},
-  //     {fav_country: {_eq:'GB'}},
-  //     {fav_country: {_eq:'GE'}},
-  //     {fav_country: {_eq:'GR'}},
-  //     {fav_country: {_eq:'IT'}},
-  //     {fav_country: {_eq:'HR'}},
-  //     {fav_country: {_eq:'IS'}},
-  //     {fav_country: {_eq:'IE'}},
-  //     {fav_country: {_eq:'HU'}},
-  //     {fav_country: {_eq:'LT'}},
-  //     {fav_country: {_eq:'LV'}},
-  //     {fav_country: {_eq:'MD'}},
-  //     {fav_country: {_eq:'MK'}},
-  //     {fav_country: {_eq:'ME'}},
-  //     {fav_country: {_eq:'LU'}},
-  //     {fav_country: {_eq:'LI'}},
-  //     {fav_country: {_eq:'NO'}},
-  //     {fav_country: {_eq:'PL'}},
-  //     {fav_country: {_eq:'PT'}},
-  //     {fav_country: {_eq:'RS'}},
-  //     {fav_country: {_eq:'RO'}},
-  //     {fav_country: {_eq:'SK'}},
-  //     {fav_country: {_eq:'SI'}},
-  //     {fav_country: {_eq:'SE'}},
-  //     {fav_country: {_eq:'TR'}},
-  //     {fav_country: {_eq:'UA'}},
-  //     {fav_country: {_eq:'XK'}},
-  //     {fav_country: {_eq:'ES'}},
-  //     {fav_country: {_eq:'FR'}},
-  //     {fav_country: {_eq:'PT'}},
-  //     {fav_country: {_eq:'CY'}}
-  //   ]
-  // }`
-
-
-
+ 
 
   // Haal alle personen uit de WHOIS API op, van dit jaar
   const personResponse = await fetch('https://fdnd.directus.app/items/person/?fields=name,fav_country&' + euFilter)
